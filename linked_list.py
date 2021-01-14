@@ -39,9 +39,9 @@ def gen_list():
 def print_node(node):
     string = "["
     while True:
+        string += str(node.val) + ","
         if node._next == None:
             break
-        string += str(node.val) + ","
         node = node._next
     string = string.rstrip(",")
     string += "]"
@@ -68,7 +68,7 @@ def remove_negative(node_root):
         if next_node._next is None:
             print '---break next next---', node.val, next_node.val
             # node._next = None
-            next_node._next = None
+            node._next = None
             break
         if next_node.val < 0:
             next_node = next_node._next
