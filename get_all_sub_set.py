@@ -31,6 +31,17 @@ def get_all_string(tmp_list):
         _get_all_string(tmp_list[1:])
     _get_all_string(tmp_list)
     return result_list
+
+
+# 使用了python的库，比较投机
+def get_all_string_simple(string):
+    from itertools import combinations
+    l = list(string)
+    result = []
+    for i in range(1, len(l) + 1):
+        for item in combinations(l, i):
+            result.append(",".join(item))
+    return result
         
 
 def get_all_sub_set(string):
@@ -44,3 +55,5 @@ def get_all_sub_set(string):
 print(get_all_string(["1", "2", "3", "4"]))
 # get_all_sub_set("12345")
 print result, len(result)
+r = get_all_string_simple("12345")
+print(len(r), r)
