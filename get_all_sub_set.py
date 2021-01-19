@@ -6,32 +6,6 @@
 # 12 23 25
 # 12345 13452
 
-result = set([])
-    
-# def get_all_sub_set(string):
-#     def _get_all_sub_set(left_string, string):
-#         new_left_string = left_string + string[0]
-#         if len(string) == 1:
-#             result.append(new_left_string)
-#             return
-#         result.append(new_left_string)
-#         _get_all_sub_set(new_left_string, string[1:])
-#     for idx in range(len(string)):
-#         _get_all_sub_set("", string[idx:])
-
-
-def get_all_string(tmp_list):
-    result_list = []
-    def _get_all_string(tmp_list):
-        if len(tmp_list) == 1:
-            return
-        left = tmp_list[0]
-        for char in tmp_list[1:]:
-            result_list.append(left + char)
-        _get_all_string(tmp_list[1:])
-    _get_all_string(tmp_list)
-    return result_list
-
 
 # 使用了python的库，比较投机
 def get_all_string_simple(string):
@@ -42,18 +16,34 @@ def get_all_string_simple(string):
         for item in combinations(l, i):
             result.append(",".join(item))
     return result
-        
-
-def get_all_sub_set(string):
-    for char in string:
-        result.add(char)
-    def _get_sub_set(string, result_length):
-        pass
-    return
 
 
-print(get_all_string(["1", "2", "3", "4"]))
-# get_all_sub_set("12345")
-print result, len(result)
+# 参照combinations的方式，其实就是按照不同的数量，去逐渐遍历出所有的组合，因此只要实现combitions即可
+import copy
+def combine(l, n):
+    result = []
+    one = [0] * n
+    def next_c(li=0, ni=0):
+        if ni == n:
+            result.append(copy.copy(one))
+            return
+        for lj in range(li, len(l)):
+            one[ni] = l[lj]
+            next_c(lj + 1, ni + 1)
+    next_c()
+    return result
+
+
+def get_all_sub_string(string):
+    l = list(string)
+    result = []
+    for i in range(1, len(l) + 1):
+        for item in combine(l, i):
+            result.append(",".join(item))
+    return result
+
+
+result = get_all_sub_string("12345")
+print len(result), result
 r = get_all_string_simple("12345")
-print(len(r), r)
+print len(r), r
